@@ -1,0 +1,43 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: aagent-core-redis
+    ports:
+      - "6480:6379"        # 方便本机用 redis 客户端调试；不需要可删掉
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:7
+    container_name: aagent-core-mongodb
+    ports:
+      - "27030:27017"      # 方便本机用 mongo 客户端调试；不需要可删掉
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-root}
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --username \"$$MONGO_INITDB_ROOT_USERNAME\" --password \"$$MONGO_INITDB_ROOT_PASSWORD\" --authenticationDatabase admin --eval \"db.adminCommand('ping')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aagent-core-app
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./src:/app/src        # 源码挂载；修改后需重启 core 容器
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  mongo_data:
