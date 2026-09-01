@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
 
   mongodb:
-    image: mongo:7
+    image: mongo:8
     container_name: aagent-core-mongodb
     ports:
       - "27030:27017"      # 方便本机用 mongo 客户端调试；不需要可删掉

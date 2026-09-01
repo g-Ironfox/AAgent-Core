@@ -1,0 +1,10 @@
+services:
+  mongodb:
+    healthcheck:
+      disable: true
+
+  core:
+    command: ["sleep", "infinity"]
+    depends_on:
+      mongodb:
+        condition: service_started
