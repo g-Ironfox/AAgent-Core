@@ -1,0 +1,37 @@
+workflow为一个数组
+每个条目都是一条json
+具体格式为:
+```
+{
+    type:"type",
+    id:"id",
+    name:"name",
+    input:[
+        {label:"AAA",id:"id",type:"port",port:[id,port_index]},
+        {label:"BBB",id:"id",type:"const",const:value},
+    ],
+    output:[
+        {label:"BBB",id:"id",type:"const",const:value},
+    ],
+    input_value:[
+        value,
+        value,
+        ...
+    ],
+    control_predecessors:[],
+    control_successors:[],
+}
+```
+注意node与port均由index标识,id仅为辅助
+
+一个node的构成:
+index(列表下标)
+id
+type
+name
+input
+output
+input_value
+
+control_successors与control_predecessors无特殊情况均要求length==1,foreach和router除外
+input_value是运行时传递参数用的,每个类型的节点预填充会有不同的初始值,避免后续调用的时候出现值不存在的情况,要防御性判断,增加代码复杂度。同时预填充的另一大意义是,保证json结构规范,不出现取不到值的情况
