@@ -30,10 +30,12 @@ function markDirty() { setStatus('未保存', true); }
 function portClass(type) { return type === 'control' ? 'control' : type.includes('message') ? 'message' : type === 'boolean' ? 'boolean' : 'content'; }
 
 function outputPorts(node) {
-  return [{ label: '下一步', type: 'control', index: -1 }, ...(node.output || []).map((port, index) => ({ label: port.label, type: port.type, index }))];
+  const controls = node.type === 'output' ? [] : [{ label: '下一步', type: 'control', index: -1 }];
+  return [...controls, ...(node.output || []).map((port, index) => ({ label: port.label, type: port.type, index }))];
 }
 function inputPorts(node) {
-  return [{ label: '触发', type: 'control', index: -1 }, ...(node.input || []).map((port, index) => ({ label: port.label, type: port.type, index }))];
+  const controls = node.type === 'input' ? [] : [{ label: '触发', type: 'control', index: -1 }];
+  return [...controls, ...(node.input || []).map((port, index) => ({ label: port.label, type: port.type, index }))];
 }
 
 function renderLibrary() {
@@ -49,7 +51,7 @@ function render() { renderNodes(); renderInspector(); renderWires(); el.meta.tex
 
 function renderNodes() {
   el.nodes.replaceChildren(...state.workflow.map((node, index) => {
-    const box = document.createElement('div'); box.className = `flow-node${index === state.selected ? ' selected' : ''}`; box.dataset.index = index;
+    const box = document.createElement('div'); box.className = `flow-node ${node.type}${index === state.selected ? ' selected' : ''}`; box.dataset.index = index;
     const meta = types[node.type] || { label: node.type, symbol: '?' }; const head = document.createElement('div'); head.className = 'node-head'; head.innerHTML = `<span class="symbol">${meta.symbol}</span><span><strong></strong><small>${node.type.toUpperCase()}</small></span>`; head.querySelector('strong').textContent = node.name;
     const ports = document.createElement('div'); ports.className = 'ports'; const inPorts = inputPorts(node); const outPorts = outputPorts(node); const rows = Math.max(inPorts.length, outPorts.length);
     for (let row = 0; row < rows; row += 1) { const line = document.createElement('div'); line.className = 'port-line';
