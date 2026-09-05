@@ -1,0 +1,106 @@
+[
+  {
+    "type": "input",
+    "name": "Input",
+    "input": [],
+    "output": [
+      {
+        "label": "content",
+        "source": "const",
+        "const": "",
+        "type": "content"
+      }
+    ],
+    "input_value": [],
+    "arguments": {},
+    "control_predecessors": [],
+    "control_successors": [
+      1
+    ]
+  },
+  {
+    "type": "llm",
+    "name": "Summarizer",
+    "input": [
+      {
+        "label": "prompt",
+        "source": "const",
+        "const": "Summarize the input.",
+        "type": "content"
+      },
+      {
+        "label": "model",
+        "source": "const",
+        "const": "deepseek-flash-v4",
+        "type": "content"
+      },
+      {
+        "label": "think",
+        "source": "const",
+        "const": false,
+        "type": "boolean"
+      },
+      {
+        "label": "tools",
+        "source": "const",
+        "const": [],
+        "type": "list-json"
+      },
+      {
+        "label": "context",
+        "source": "port",
+        "port": [
+          0,
+          0
+        ],
+        "type": "content"
+      }
+    ],
+    "output": [
+      {
+        "label": "output",
+        "source": "port",
+        "port": null,
+        "type": "content"
+      }
+    ],
+    "input_value": [
+      "Summarize the input.",
+      "deepseek-flash-v4",
+      false,
+      [],
+      ""
+    ],
+    "arguments": {},
+    "control_predecessors": [
+      0
+    ],
+    "control_successors": [
+      2
+    ]
+  },
+  {
+    "type": "output",
+    "name": "Output",
+    "input": [
+      {
+        "label": "content",
+        "source": "port",
+        "port": [
+          1,
+          0
+        ],
+        "type": "content"
+      }
+    ],
+    "output": [],
+    "input_value": [
+      ""
+    ],
+    "arguments": {},
+    "control_predecessors": [
+      1
+    ],
+    "control_successors": []
+  }
+]

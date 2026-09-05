@@ -1,6 +1,12 @@
 import time
 import database
 
+def queue_act() -> None:
+    """
+    workflow通过fwhile循环进行"树遍历"
+    """
+    
+
 def main() -> None:
     print("core starting...")
     

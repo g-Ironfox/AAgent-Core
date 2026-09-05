@@ -38,6 +38,18 @@ services:
       - ./src:/app/src        # 源码挂载；修改后需重启 core 容器
     restart: unless-stopped
 
+  editor:
+    build:
+      context: .
+      dockerfile: editor/Dockerfile
+    container_name: aagent-core-editor
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./editor/data:/app/editor/data
+      - ./editor/static:/app/editor/static
+    restart: unless-stopped
+
 volumes:
   redis_data:
   mongo_data:

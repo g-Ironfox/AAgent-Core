@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AAgent Workflow Editor</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><span class="eyebrow">AA / WORKFLOW</span><h1>Workflow Editor</h1></div>
+    <div class="actions"><span id="status">读取中</span><button id="reset">重置</button><button id="import">导入</button><button id="export">导出</button><button id="save" class="primary">保存</button><input id="file" type="file" accept="application/json" hidden></div>
+  </header>
+  <main class="layout">
+    <aside class="library panel"><div class="panel-title"><span>COMPONENTS</span><strong>节点库</strong></div><div id="library"></div></aside>
+    <section class="canvas-wrap panel"><div class="canvas-head"><strong>WORKFLOW</strong><span id="meta"></span></div><div id="canvas"><div class="grid"></div><svg id="wires"></svg><div id="nodes"></div></div></section>
+    <aside class="inspector panel"><div class="panel-title"><span>INSPECTOR</span><strong id="inspector-title">选择节点</strong></div><div id="inspector"></div></aside>
+  </main>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>
