@@ -102,5 +102,24 @@
       1
     ],
     "control_successors": []
+  },
+  {
+    "type": "output",
+    "name": "Output",
+    "input": [
+      {
+        "label": "content",
+        "source": "const",
+        "const": "",
+        "type": "content"
+      }
+    ],
+    "output": [],
+    "input_value": [
+      ""
+    ],
+    "arguments": {},
+    "control_predecessors": [],
+    "control_successors": []
   }
 ]

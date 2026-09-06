@@ -107,8 +107,11 @@ def validate_workflow(workflow: Any) -> None:
 
 
 @app.get("/", response_class=FileResponse)
-def index() -> Path:
-    return STATIC_DIR / "index.html"
+def index() -> FileResponse:
+    return FileResponse(
+        STATIC_DIR / "index.html",
+        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},
+    )
 
 
 @app.get("/api/workflow")
